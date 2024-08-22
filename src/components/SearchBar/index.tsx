@@ -19,7 +19,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
       onChange={handleChange}
       placeholder="Search..."
       aria-label="Search"
-      className="w-full max-w-7xl p-1"
+      className="w-full max-w-7xl p-1 drop-shadow-md mb-2"
     />
   );
 };

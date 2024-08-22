@@ -1,4 +1,4 @@
-import { debouncer } from "./debouncer";
+import debouncer from "./debouncer";
 
 jest.useFakeTimers();
 

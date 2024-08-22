@@ -1,4 +1,4 @@
-export function debouncer<A, R = unknown>(
+export default function debouncer<A, R = unknown>(
   callback: (args?: A) => R,
   delay: number = 500,
 ) {

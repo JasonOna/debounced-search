@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { debouncer as debounceUtil } from "@/utils/debouncer";
+import debounceUtil from "@/utils/debouncer";
 
 const productURL = "https://dummyjson.com/products/search?q=";
 
