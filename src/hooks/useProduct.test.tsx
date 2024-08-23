@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import useProductQuery from "./useProduct";
 
+jest.mock('@/utils/debouncer')
+
 const TestComponent = ({
   query,
   mockFetch = jest.fn(),
@@ -11,7 +13,6 @@ const TestComponent = ({
   const { responseJSON, isLoading, error } = useProductQuery(
     query,
     mockFetch,
-    (arg) => [arg, () => {}],
   );
   return (
     <div>

@@ -1,13 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
-import debounceUtil from "@/utils/debouncer";
+import debouncer from "@/utils/debouncer";
 
 const productURL = "https://dummyjson.com/products/search?q=";
 
-const useProductQuery = (
+export default function useProductQuery(
   search: string,
-  fetcher: (input: string) => Promise<Response> = fetch,
-  debouncer = debounceUtil,
-) => {
+  fetcher: (input: string) => Promise<Response>,
+) {
   const [responseJSON, setResponseJSON] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +56,4 @@ const useProductQuery = (
     isLoading,
     error,
   };
-};
-
-export default useProductQuery;
+}
