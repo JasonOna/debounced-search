@@ -1,17 +1,20 @@
 import { useState } from "react";
-import "./App.css";
 import SearchBar from "./components/SearchBar";
 import useProductQuery from "./hooks/useProduct";
 import parseData from "./utils/parseData";
-import { Results } from "./components/Results";
+import Results from "./components/Results";
 
-function App() {
+function App({
+  fetcher = fetch,
+}: {
+  fetcher?: (input: string) => Promise<Response>;
+}) {
   const [query, setQuery] = useState("");
-  const { responseJSON, isLoading, error } = useProductQuery(query);
+  const { responseJSON, isLoading, error } = useProductQuery(query, fetcher);
 
   const results = parseData(responseJSON);
   return (
-    <section className="p-3">
+    <section className="p-3 max-w-3xl">
       <SearchBar
         onSearch={(search: string) => {
           setQuery(search);
