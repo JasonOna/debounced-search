@@ -105,7 +105,7 @@ test("can clear the results", async () => {
 
   fireEvent.click(clearButton);
 
-  expect(screen.queryByText("Hello world!")).not.toBeTruthy();
+  expect(screen.queryByText(searchPrompt)).not.toBeTruthy();
 });
 
 test("shows the results", async () => {
@@ -118,9 +118,10 @@ test("shows the results", async () => {
 
   const input = await screen.findByRole("textbox");
   fireEvent.change(input, { target: { value: "Yo mama" } });
+  const expectedTitle = "Calvin Klein CK One"
 
   await waitFor(async () => {
-    expect(await screen.findByText("Calvin Klein CK One")).toBeTruthy();
+    expect(await screen.findByText(expectedTitle)).toBeTruthy();
   });
 });
 
