@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import useProductQuery from "./useProduct";
 
-jest.mock('@/utils/debouncer')
+jest.mock("@/utils/debouncer");
 
 const TestComponent = ({
   query,
@@ -10,10 +10,7 @@ const TestComponent = ({
   query: string;
   mockFetch: (input: string) => Promise<Response>;
 }) => {
-  const { responseJSON, isLoading, error } = useProductQuery(
-    query,
-    mockFetch,
-  );
+  const { responseJSON, isLoading, error } = useProductQuery(query, mockFetch);
   return (
     <div>
       <div>response is: {JSON.stringify(responseJSON)}</div>

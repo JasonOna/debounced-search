@@ -1,12 +1,7 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
 
-jest.mock('./utils/debouncer')
+jest.mock("./utils/debouncer");
 
 const searchPrompt = "searching for results";
 const errorPrompt = "something went wrong";
