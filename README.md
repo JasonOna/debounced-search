@@ -68,3 +68,9 @@
 - Other tests that might be useful
   - hitting endpoints can be easily overloaded, maybe check that calls are debounced like I did with the debouncer unit test
   - Accessibility and Cross-browser/platform (admittedly, I don't have extensive experience with this but I have used lighthouse and BrowserStack for more manual testing)
+
+## Late additions
+
+I submitted this on 23 Aug, and decided to clean up some things while I was waiting:
+
+[PR 1](https://github.com/JasonOna/debounced-search/pull/1/files) Uses `renderHook` over a `TestComponent` to check `JSON.stringify`ed return values.
