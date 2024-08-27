@@ -118,7 +118,7 @@ test("shows the results", async () => {
 
   const input = await screen.findByRole("textbox");
   fireEvent.change(input, { target: { value: "Yo mama" } });
-  const expectedTitle = "Calvin Klein CK One"
+  const expectedTitle = "Calvin Klein CK One";
 
   await waitFor(async () => {
     expect(await screen.findByText(expectedTitle)).toBeTruthy();

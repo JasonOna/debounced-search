@@ -1,24 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
 import useProductQuery from "./useProduct";
 
 jest.mock("@/utils/debouncer");
-
-const TestComponent = ({
-  query,
-  mockFetch = jest.fn(),
-}: {
-  query: string;
-  mockFetch: (input: string) => Promise<Response>;
-}) => {
-  const { responseJSON, isLoading, error } = useProductQuery(query, mockFetch);
-  return (
-    <div>
-      <div>response is: {JSON.stringify(responseJSON)}</div>
-      <div>is loading is: {JSON.stringify(isLoading)}</div>
-      <div>error is: {JSON.stringify(error)}</div>
-    </div>
-  );
-};
 
 describe("useProductQuery", () => {
   test("hits the correct endpoint", async () => {
@@ -26,10 +9,10 @@ describe("useProductQuery", () => {
     const query = "lego";
     const expectedUrl = "https://dummyjson.com/products/search?q=lego";
 
-    render(<TestComponent query={query} mockFetch={mockFetch} />);
+    const { result } = renderHook(() => useProductQuery(query, mockFetch));
 
     await waitFor(async () => {
-      await screen.findByText("is loading is: false");
+      expect(result.current.isLoading).toEqual(false);
     });
 
     expect(mockFetch).toHaveBeenCalledWith(expectedUrl);
@@ -39,10 +22,10 @@ describe("useProductQuery", () => {
     const mockFetch = jest.fn();
     const query = "";
 
-    render(<TestComponent query={query} mockFetch={mockFetch} />);
+    const { result } = renderHook(() => useProductQuery(query, mockFetch));
 
     await waitFor(async () => {
-      await screen.findByText("is loading is: false");
+      expect(result.current.isLoading).toEqual(false);
     });
 
     expect(mockFetch).not.toHaveBeenCalled();
@@ -53,15 +36,14 @@ describe("useProductQuery", () => {
     mockFetch.mockResolvedValue({ json: () => "mockResponse" });
     const query = "any";
 
-    render(<TestComponent query={query} mockFetch={mockFetch} />);
+    const { result } = renderHook(() => useProductQuery(query, mockFetch));
 
     await waitFor(async () => {
-      await screen.findByText("is loading is: false");
+      expect(result.current.isLoading).toEqual(false);
     });
 
-    await waitFor(async () => {
-      await screen.findByText('response is: "mockResponse"');
-    });
+    expect(result.current.responseJSON).toEqual("mockResponse");
+    expect(result.current.error).toBeNull();
   });
 
   test("returns error when fetch errors", async () => {
@@ -71,14 +53,13 @@ describe("useProductQuery", () => {
     });
     const query = "any";
 
-    render(<TestComponent query={query} mockFetch={mockFetch} />);
+    const { result } = renderHook(() => useProductQuery(query, mockFetch));
 
     await waitFor(async () => {
-      await screen.findByText("is loading is: false");
+      expect(result.current.isLoading).toEqual(false);
     });
 
-    await waitFor(async () => {
-      await screen.findByText('error is: "something went wrong"');
-    });
+    expect(result.current.error).toEqual("something went wrong");
+    expect(result.current.responseJSON).toBeNull();
   });
 });
